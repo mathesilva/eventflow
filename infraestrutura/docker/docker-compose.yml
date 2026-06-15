@@ -1,0 +1,73 @@
+version: '3.9'
+
+services:
+
+  postgres-user:
+    image: postgres:16
+    container_name: postgres-user
+    restart: unless-stopped
+    environment:
+      POSTGRES_DB: user_db
+      POSTGRES_USER: user_admin
+      POSTGRES_PASSWORD: user_pass
+    ports:
+      - "5436:5432"
+    volumes:
+      - user-db-data:/var/lib/postgresql/data
+    networks:
+      - eventflow-network
+
+  postgres-event:
+    image: postgres:16
+    container_name: postgres-event
+    restart: unless-stopped
+    environment:
+      POSTGRES_DB: event_db
+      POSTGRES_USER: event_admin
+      POSTGRES_PASSWORD: event_pass
+    ports:
+      - "5433:5432"
+    volumes:
+      - event-db-data:/var/lib/postgresql/data
+    networks:
+      - eventflow-network
+
+  postgres-reservation:
+    image: postgres:16
+    container_name: postgres-reservation
+    restart: unless-stopped
+    environment:
+      POSTGRES_DB: reservation_db
+      POSTGRES_USER: reservation_admin
+      POSTGRES_PASSWORD: reservation_pass
+    ports:
+      - "5434:5432"
+    volumes:
+      - reservation-db-data:/var/lib/postgresql/data
+    networks:
+      - eventflow-network
+
+  postgres-payment:
+    image: postgres:16
+    container_name: postgres-payment
+    restart: unless-stopped
+    environment:
+      POSTGRES_DB: payment_db
+      POSTGRES_USER: payment_admin
+      POSTGRES_PASSWORD: payment_pass
+    ports:
+      - "5435:5432"
+    volumes:
+      - payment-db-data:/var/lib/postgresql/data
+    networks:
+      - eventflow-network
+
+volumes:
+  user-db-data:
+  event-db-data:
+  reservation-db-data:
+  payment-db-data:
+
+networks:
+  eventflow-network:
+    driver: bridge
