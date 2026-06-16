@@ -1,2 +1,4 @@
+com/eventflow/userservice/domain/entity/User.class
+com/eventflow/userservice/domain/enums/UserStatus.class
 com/eventflow/userservice/controller/HealthController.class
 com/eventflow/userservice/UserserviceApplication.class
