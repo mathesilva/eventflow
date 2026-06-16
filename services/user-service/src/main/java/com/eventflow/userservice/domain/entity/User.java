@@ -14,6 +14,7 @@ import java.util.UUID;
 public class User {
 
     @Id
+    @GeneratedValue(strategy = GenerationType.UUID)
     private UUID id;
 
     private String nome;
@@ -27,6 +28,7 @@ public class User {
     @Enumerated(EnumType.STRING)
     private UserStatus status;
 
+    @Column(name = "data_criacao", insertable = false, updatable = false)
     private LocalDateTime dataCriacao;
 
 }

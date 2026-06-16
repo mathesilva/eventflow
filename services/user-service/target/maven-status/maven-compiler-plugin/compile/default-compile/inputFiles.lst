@@ -1,4 +1,9 @@
 /Users/faiaxx/eventflow/services/user-service/src/main/java/com/eventflow/userservice/UserserviceApplication.java
 /Users/faiaxx/eventflow/services/user-service/src/main/java/com/eventflow/userservice/controller/HealthController.java
+/Users/faiaxx/eventflow/services/user-service/src/main/java/com/eventflow/userservice/controller/UserController.java
 /Users/faiaxx/eventflow/services/user-service/src/main/java/com/eventflow/userservice/domain/entity/User.java
 /Users/faiaxx/eventflow/services/user-service/src/main/java/com/eventflow/userservice/domain/enums/UserStatus.java
+/Users/faiaxx/eventflow/services/user-service/src/main/java/com/eventflow/userservice/dto/CreateUserRequest.java
+/Users/faiaxx/eventflow/services/user-service/src/main/java/com/eventflow/userservice/dto/UserResponse.java
+/Users/faiaxx/eventflow/services/user-service/src/main/java/com/eventflow/userservice/repository/UserRepository.java
+/Users/faiaxx/eventflow/services/user-service/src/main/java/com/eventflow/userservice/service/UserService.java
