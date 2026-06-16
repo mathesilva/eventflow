@@ -7,14 +7,16 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.Map;
+
 @RequestMapping("/health")
 @RestController
 public class HealthController {
 
 
     @GetMapping()
-    public HttpStatusCode healthCheck(){
-        return ResponseEntity.ok(HttpStatus.OK).getStatusCode();
+    public Map<String, String> healthCheck(){
+        return Map.of("status", "UP");
     }
 
 }
