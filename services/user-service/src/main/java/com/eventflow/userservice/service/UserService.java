@@ -7,6 +7,7 @@ import com.eventflow.userservice.dto.UserResponse;
 import com.eventflow.userservice.exception.EmailJaCadastradoException;
 import com.eventflow.userservice.repository.UserRepository;
 import org.springframework.http.HttpStatus;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
@@ -16,13 +17,14 @@ import java.util.Optional;
 public class UserService {
 
     private final UserRepository userRepository;
+    private final PasswordEncoder passwordEncoder;
 
-    public UserService(UserRepository userRepository) {
+    public UserService(UserRepository userRepository, PasswordEncoder passwordEncoder) {
         this.userRepository = userRepository;
+        this.passwordEncoder = passwordEncoder;
     }
 
     public UserResponse criarUsuario(CreateUserRequest request){
-        Optional<User> userEmail = userRepository.findByEmail(request.email());
         if (userRepository.existsByEmail(request.email())){
             throw new EmailJaCadastradoException("Email ja cadastrado na plataforma!");
         }
@@ -30,7 +32,7 @@ public class UserService {
         user.setNome(request.nome());
         user.setSobrenome(request.sobrenome());
         user.setEmail(request.email());
-        user.setPassword(request.senha());
+        user.setPassword(passwordEncoder.encode(request.password()));
         user.setStatus(UserStatus.ATIVO);
         user.setDataCriacao(LocalDateTime.now());
 
