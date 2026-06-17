@@ -11,13 +11,13 @@ import java.time.Instant;
 @Service
 public class JwtService {
 
-    @Value("${JWT_SECRET}")
+    @Value("${jwt.secret}")
     private String secret;
 
     public String gerarToken(User user){
             Algorithm algorithm = Algorithm.HMAC256(secret);
             return JWT.create().withIssuer("eventflow")
-                    .withSubject(user.getId().toString())
+                    .withSubject(user.getEmail())
                     .withExpiresAt(Instant.now().plusSeconds(86400))
                     .withIssuedAt(Instant.now())
                     .sign(algorithm);

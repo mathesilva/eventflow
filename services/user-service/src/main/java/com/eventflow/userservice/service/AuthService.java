@@ -18,29 +18,26 @@ public class AuthService {
 
     private final UserRepository userRepository;
     private final PasswordEncoder passwordEncoder;
+    private final JwtService jwtService;
+    private final AuthenticationManager authenticationManager;
 
-
-    public AuthService(UserRepository userRepository, PasswordEncoder passwordEncoder) {
+    public AuthService(UserRepository userRepository, PasswordEncoder passwordEncoder, JwtService jwtService, AuthenticationManager authenticationManager) {
         this.userRepository = userRepository;
         this.passwordEncoder = passwordEncoder;
+        this.jwtService = jwtService;
+        this.authenticationManager = authenticationManager;
     }
 
 
-    public void loginUser(LoginRequest login){
+    public LoginResponse loginUser(LoginRequest login){
+        UsernamePasswordAuthenticationToken userAndPass = new UsernamePasswordAuthenticationToken
+                (login.email(), login.password());
 
-        User user = userRepository.findByEmail(login.email())
-                .orElseThrow(()->
-                new InvalidCredentialsException("Credenciais Invalidas"));
+        Authentication authentication = authenticationManager.authenticate(userAndPass);
 
-        if (user.getStatus() == UserStatus.INATIVO || user.getStatus() == UserStatus.BLOQUEADO){
-            throw new InvalidCredentialsException("Credenciais Invalidas");
-        }
-
-        boolean senhaValida = passwordEncoder.matches(login.password(), user.getPassword());
-
-        if (!senhaValida){
-            throw new InvalidCredentialsException("Credenciais Invalidas");
-        }
+        User userAuth = (User) authentication.getPrincipal();
+        String token = jwtService.gerarToken(userAuth);
+        return new LoginResponse(token);
     }
 
 }
