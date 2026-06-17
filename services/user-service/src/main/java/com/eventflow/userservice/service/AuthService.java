@@ -2,8 +2,14 @@ package com.eventflow.userservice.service;
 
 import com.eventflow.userservice.domain.entity.User;
 import com.eventflow.userservice.domain.enums.UserStatus;
+import com.eventflow.userservice.dto.LoginRequest;
+import com.eventflow.userservice.dto.LoginResponse;
 import com.eventflow.userservice.exception.InvalidCredentialsException;
 import com.eventflow.userservice.repository.UserRepository;
+import com.eventflow.userservice.security.JwtService;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.Authentication;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -20,7 +26,8 @@ public class AuthService {
     }
 
 
-    public User loginUser(LoginRequest login){
+    public void loginUser(LoginRequest login){
+
         User user = userRepository.findByEmail(login.email())
                 .orElseThrow(()->
                 new InvalidCredentialsException("Credenciais Invalidas"));
@@ -34,8 +41,6 @@ public class AuthService {
         if (!senhaValida){
             throw new InvalidCredentialsException("Credenciais Invalidas");
         }
-
-        return user;
     }
 
 }

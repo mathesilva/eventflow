@@ -1,4 +1,4 @@
-package com.eventflow.userservice.service;
+package com.eventflow.userservice.dto;
 
 import jakarta.validation.constraints.NotEmpty;
 
