@@ -21,19 +21,21 @@ public class AuthService {
 
 
     public User loginUser(LoginRequest login){
-        User userLogado = new User();
+        User user = userRepository.findByEmail(login.email())
+                .orElseThrow(()->
+                new InvalidCredentialsException("Credenciais Invalidas"));
 
-        if (!userRepository.existsByEmail(login.email())){
+        if (user.getStatus() == UserStatus.INATIVO || user.getStatus() == UserStatus.BLOQUEADO){
             throw new InvalidCredentialsException("Credenciais Invalidas");
         }
-        if (userLogado.getStatus() == UserStatus.INATIVO || userLogado.getStatus() == UserStatus.BLOQUEADO){
+
+        boolean senhaValida = passwordEncoder.matches(login.password(), user.getPassword());
+
+        if (!senhaValida){
             throw new InvalidCredentialsException("Credenciais Invalidas");
         }
-        if (!userRepository.existsByPassword(login.password())){
-            throw new InvalidCredentialsException("Credenciais Invalidas");
-        }
-        passwordEncoder.matches(login.password(), userLogado.getPassword());
-        return userLogado;
+
+        return user;
     }
 
 }
