@@ -65,6 +65,11 @@ services:
   user-service:
     build:
       context: ../../services/user-service
+    environment:
+      DB_URL: jdbc:postgresql://postgres-user:5432/user_db
+      DB_USER: user_admin
+      DB_PASSWORD: user_pass
+      JWT_SECRET: ${JWT_SECRET}
 
     container_name: user-service
 
