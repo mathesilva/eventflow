@@ -22,7 +22,6 @@ public class AuthController {
             this.authService = authService;
         }
 
-
     @PostMapping("/login")
         public ResponseEntity<LoginResponse> loginUser(@RequestBody LoginRequest login){
             return ResponseEntity.ok(authService.loginUser(login));
