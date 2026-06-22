@@ -1,10 +1,12 @@
 package com.eventflow.userservice.domain.entity;
 
+import com.eventflow.userservice.domain.enums.UserRole;
 import com.eventflow.userservice.domain.enums.UserStatus;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
 import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import java.time.LocalDateTime;
@@ -32,12 +34,20 @@ public class User implements UserDetails {
     @Enumerated(EnumType.STRING)
     private UserStatus status;
 
+    @Column(name = "role")
+    @Enumerated(EnumType.STRING)
+    private UserRole userRole;
+
     @Column(name = "data_criacao", insertable = false, updatable = false)
     private LocalDateTime dataCriacao;
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        return List.of();
+        return List.of(
+                new SimpleGrantedAuthority(
+                "ROLE_" + userRole.name()
+                )
+        );
     }
 
     @Override

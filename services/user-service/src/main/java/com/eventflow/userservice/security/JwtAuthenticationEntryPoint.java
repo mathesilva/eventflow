@@ -26,10 +26,13 @@ public class JwtAuthenticationEntryPoint implements AuthenticationEntryPoint {
     public void commence(HttpServletRequest request, HttpServletResponse response, AuthenticationException authException) throws IOException, ServletException {
         response.setContentType(MediaType.APPLICATION_JSON_VALUE);
         response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
+        response.setStatus(HttpServletResponse.SC_FORBIDDEN);
 
         Map<String, Object> body = new HashMap<>();
         body.put("status", HttpServletResponse.SC_UNAUTHORIZED);
+        body.put("status", HttpServletResponse.SC_FORBIDDEN);
         body.put("error", "Unauthorized");
+        body.put("error", "Forbidden");
         body.put("message", authException.getMessage());
         body.put("path", request.getServletPath());
 

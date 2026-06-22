@@ -1,9 +1,9 @@
 com/eventflow/userservice/controller/UserController.class
+com/eventflow/userservice/controller/HealthController.class
+com/eventflow/userservice/dto/CreateUserRequest.class
+com/eventflow/userservice/domain/enums/UserStatus.class
+com/eventflow/userservice/service/UserService.class
 com/eventflow/userservice/domain/entity/User.class
 com/eventflow/userservice/dto/UserResponse.class
-com/eventflow/userservice/domain/enums/UserStatus.class
 com/eventflow/userservice/repository/UserRepository.class
-com/eventflow/userservice/controller/HealthController.class
 com/eventflow/userservice/UserserviceApplication.class
-com/eventflow/userservice/dto/CreateUserRequest.class
-com/eventflow/userservice/service/UserService.class
