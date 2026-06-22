@@ -18,6 +18,7 @@ public class JwtService {
             Algorithm algorithm = Algorithm.HMAC256(secret);
             return JWT.create().withIssuer("eventflow")
                     .withSubject(user.getEmail())
+                    .withClaim("role", user.getUserRole().name())
                     .withExpiresAt(Instant.now().plusSeconds(86400))
                     .withIssuedAt(Instant.now())
                     .sign(algorithm);

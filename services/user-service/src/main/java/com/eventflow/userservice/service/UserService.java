@@ -1,6 +1,7 @@
 package com.eventflow.userservice.service;
 
 import com.eventflow.userservice.domain.entity.User;
+import com.eventflow.userservice.domain.enums.UserRole;
 import com.eventflow.userservice.domain.enums.UserStatus;
 import com.eventflow.userservice.dto.CreateUserRequest;
 import com.eventflow.userservice.dto.UserResponse;
@@ -35,6 +36,7 @@ public class UserService {
         user.setPassword(passwordEncoder.encode(request.password()));
         user.setStatus(UserStatus.ATIVO);
         user.setDataCriacao(LocalDateTime.now());
+        user.setUserRole(UserRole.CUSTOMER);
 
         User newUser = userRepository.save(user);
 
