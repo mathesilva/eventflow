@@ -17,7 +17,7 @@ public class JwtService {
     public String gerarToken(User user){
             Algorithm algorithm = Algorithm.HMAC256(secret);
             return JWT.create().withIssuer("eventflow")
-                    .withSubject(user.getEmail())
+                    .withSubject(user.getId().toString())
                     .withClaim("role", user.getUserRole().name())
                     .withExpiresAt(Instant.now().plusSeconds(86400))
                     .withIssuedAt(Instant.now())
