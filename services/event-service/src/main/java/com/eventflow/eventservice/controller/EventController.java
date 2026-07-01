@@ -40,4 +40,9 @@ public class EventController {
                     .orElse(ResponseEntity.notFound().build());
         }
 
+        @PatchMapping("/events/{id}/publish")
+        public EventResponse publicar(@PathVariable UUID id){
+            return eventService.publicado(id);
+        }
+
 }
