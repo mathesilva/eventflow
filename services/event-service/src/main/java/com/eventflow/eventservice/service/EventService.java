@@ -3,10 +3,14 @@ package com.eventflow.eventservice.service;
 import com.eventflow.eventservice.domain.entity.Event;
 import com.eventflow.eventservice.domain.enums.EventStatus;
 import com.eventflow.eventservice.dto.CreatEventRequest;
+import com.eventflow.eventservice.dto.EventDetailResponse;
 import com.eventflow.eventservice.dto.EventResponse;
+import com.eventflow.eventservice.dto.EventSummaryResponse;
 import com.eventflow.eventservice.repository.EventRepository;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+import java.util.Optional;
 import java.util.UUID;
 
 @Service
@@ -35,5 +39,37 @@ public class EventService {
         return new EventResponse(newEvent.getId(), newEvent.getTitulo(), newEvent.getStatus());
     }
 
+    public List<EventSummaryResponse> findAll() {
+        return eventRepository.findAll()
+                .stream()
+                .map(this::toSummaryResponse)
+                .toList();
+    }
 
+    public Optional<EventDetailResponse> findById(UUID id) {
+        return eventRepository.findById(id)
+                .map(this::toDetailResponse);
+    }
+
+    private EventSummaryResponse toSummaryResponse(Event event) {
+        return new EventSummaryResponse(
+                event.getId(),
+                event.getTitulo(),
+                event.getStatus(),
+                event.getLocation()
+        );
+    }
+
+    private EventDetailResponse toDetailResponse(Event event) {
+        return new EventDetailResponse(
+                event.getId(),
+                event.getTitulo(),
+                event.getDescricao(),
+                event.getLocation(),
+                event.getEventDate(),
+                event.getStatus(),
+                event.getTotalTickets(),
+                event.getTicketsDisponiveis()
+        );
+    }
 }
