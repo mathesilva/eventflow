@@ -6,6 +6,8 @@ import com.eventflow.eventservice.dto.CreatEventRequest;
 import com.eventflow.eventservice.dto.EventDetailResponse;
 import com.eventflow.eventservice.dto.EventResponse;
 import com.eventflow.eventservice.dto.EventSummaryResponse;
+import com.eventflow.eventservice.exception.InvalidEventStatusException;
+import com.eventflow.eventservice.exception.NaoEncontradoException;
 import com.eventflow.eventservice.repository.EventRepository;
 import org.springframework.stereotype.Service;
 
@@ -72,4 +74,16 @@ public class EventService {
                 event.getTicketsDisponiveis()
         );
     }
+
+    public EventResponse publicado(UUID id){
+        Event event = eventRepository.findById(id).orElseThrow(()-> new NaoEncontradoException("Usuario nao encontado"));
+        if (event.getStatus() != EventStatus.RASCUNHO){
+            throw new InvalidEventStatusException("O evento já foi publicado.");
+        }
+        event.setStatus(EventStatus.PUBLICADO);
+        eventRepository.save(event);
+
+        return new EventResponse(event.getId(), event.getTitulo(), event.getStatus());
+    }
+
 }
